@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailVerification;
+use App\Models\UserCode;
 
 class RegisteredUserController extends Controller
 {
@@ -55,7 +58,20 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+        $otp_code = random_int(100000, 999999);
+        $otp = [
+            'email_otpCode'=>$otp_code,
+        ];
+        Mail::to($user->email)->send(new EmailVerification($otp));
 
-        return redirect(RouteServiceProvider::HOME);
+        $userCode = UserCode::create([
+            'phone' => $user->phone_number,
+            'email' => $user->email,
+            'otp' => $otp_code,
+            'code' => 1111,
+        ]);
+
+        return redirect()->route('verification');
+        // return redirect(RouteServiceProvider::HOME);
     }
 }
