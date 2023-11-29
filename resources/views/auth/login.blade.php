@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>CelestialUI Admin</title>
+  <title>Techesthete</title>
   <!-- base:css -->
   <link rel="stylesheet" href="{{asset('template/vendors/typicons.font/font/typicons.css')}}">
   <link rel="stylesheet" href="{{asset('template/vendors/css/vendor.bundle.base.css')}}">
@@ -27,7 +27,7 @@
               <div class="brand-logo">
                 <img src="{{asset('template/images/logo.svg')}}" alt="logo">
               </div>
-              <h4>Hello! let's get started</h4>
+              <h4>Techesthete</h4>
               <h6 class="font-weight-light">Sign in to continue.</h6>
               <form class="pt-3" method="POST" action="{{ route('login') }}">
                 @csrf
