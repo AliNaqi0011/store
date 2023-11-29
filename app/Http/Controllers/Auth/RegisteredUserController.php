@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
                 return redirect()->route('verification')->with('error', 'Please verify your number and email');
             }
         }
-        // dd($request->all());
+        
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'max:20'],
@@ -54,20 +54,12 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // $user = new User();
-        // $user->name = $request->name;
-        // $user->email = $request->email;
-        // $user->phone_number = $request->phone_number;
-        // $user->password = Hash::make($request->password);
-        // $user->save();
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
         ]);
-        // dd($request->phone_number);
 
         event(new Registered($user));
 
@@ -79,23 +71,22 @@ class RegisteredUserController extends Controller
 
 
         // Send Email Verification OTP
-        // Mail::to($user->email)->send(new EmailVerification($otp));
+        Mail::to($user->email)->send(new EmailVerification($otp));
 
         
         // Send Phone Number Verification OTP
-        // $otpmobilecode = mt_rand(1000, 9999); // Generate a random 4-digit OTP
+        $otpmobilecode = mt_rand(1000, 9999); // Generate a random 4-digit OTP
+        $to = $request->input('phone_number'); // The recipient's phone number
 
-        // $to = $request->input('phone_number'); // The recipient's phone number
-
-        // // Use Twilio to send the OTP
-        // $twilio = new Client(config('services.twilio.account_sid'), config('services.twilio.auth_token'));
-        // $twilio->messages->create(
-        //     '+'.$to,
-        //     [
-        //         'from' => config('services.twilio.from'),
-        //         'body' => "Your OTP is: $otpmobilecode",
-        //     ]
-        // );
+        // Use Twilio to send the OTP
+        $twilio = new Client(config('services.twilio.account_sid'), config('services.twilio.auth_token'));
+        $twilio->messages->create(
+            '+'.$to,
+            [
+                'from' => config('services.twilio.from'),
+                'body' => "Your OTP is: $otpmobilecode",
+            ]
+        );
 
         $userCode = UserCode::create([
             'phone' => $user->phone_number,
