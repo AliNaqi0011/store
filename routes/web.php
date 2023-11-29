@@ -19,7 +19,11 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/verification', [VerificationController::class, 'verification'])->name('verification');
+Route::middleware(['check.session.data'])->group(function () {
+    // Routes that require session data check
+    Route::get('/verification', [VerificationController::class, 'verification'])->name('verification');
+    Route::post('/verification', [VerificationController::class, 'VerifyEmaiLPhoneOtp'])->name('verify.email.phone.otp');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
