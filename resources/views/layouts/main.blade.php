@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="{{asset('template/vendors/css/vendor.bundle.base.css')}}">
     <link rel="stylesheet" href="{{asset('template/css/vertical-layout-light/style.css')}}">
     <link rel="shortcut icon" href="{{asset('template/images/favicon.png')}}" />
+
+    <!-- Toaster Link -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
 <body>
@@ -63,6 +66,28 @@
     <script src="{{asset('template/vendors/progressbar.js/progressbar.min.js')}}"></script>
     <script src="{{asset('template/vendors/chart.js/Chart.min.js')}}"></script>
     <script src="{{asset('template/js/dashboard.js')}}"></script>
+
+
+    <!-- Toaster script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    @if(Session::has('success'))
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true
+        }
+        toastr.success("{{session('success')}}")
+    </script>
+    @endif
+    @if(Session::has('error'))
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true
+        }
+        toastr.error("{{session('error')}}")
+    </script>
+    @endif
 </body>
 
 </html>

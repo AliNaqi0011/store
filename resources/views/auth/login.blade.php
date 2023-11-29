@@ -5,13 +5,16 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>CelestialUI Admin</title>
+  <title>Techesthete</title>
   <!-- base:css -->
   <link rel="stylesheet" href="{{asset('template/vendors/typicons.font/font/typicons.css')}}">
   <link rel="stylesheet" href="{{asset('template/vendors/css/vendor.bundle.base.css')}}">
   <link rel="stylesheet" href="{{asset('template/css/vertical-layout-light/style.css')}}">
   <!-- endinject -->
   <link rel="shortcut icon" href="{{asset('template/images/favicon.png')}}" />
+
+  <!-- Toaster Link -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
 <body>
@@ -24,7 +27,7 @@
               <div class="brand-logo">
                 <img src="{{asset('template/images/logo.svg')}}" alt="logo">
               </div>
-              <h4>Hello! let's get started</h4>
+              <h4>Techesthete</h4>
               <h6 class="font-weight-light">Sign in to continue.</h6>
               <form class="pt-3" method="POST" action="{{ route('login') }}">
                 @csrf
@@ -33,7 +36,7 @@
                 </div>
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 <div class="form-group">
-                  <input type="password"name="password" class="form-control form-control-lg" id="password" placeholder="Password">
+                  <input type="password" name="password" class="form-control form-control-lg" id="password" placeholder="Password">
                 </div>
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 <div class="mt-3">
@@ -72,11 +75,32 @@
   <!-- inject:js -->
   <script src="{{asset('template/js/off-canvas.js')}}"></script>
   <script src="{{asset('template/js/hoverable-collapse.js')}}"></script>
-  <script src="{{asset('template/js/js/template.js')}}"></script>
+  <script src="{{asset('template/js/template.js')}}"></script>
   <script src="{{asset('template/js/settings.js')}}"></script>
   <script src="{{asset('template/js/todolist.js')}}"></script>
   <!-- endinject -->
+
+
+  <!-- Toaster script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+  @if(Session::has('success'))
+  <script>
+    toastr.options = {
+      "closeButton": true,
+      "progressBar": true
+    }
+    toastr.success("{{session('success')}}")
+  </script>
+  @endif
+  @if(Session::has('error'))
+  <script>
+    toastr.options = {
+      "closeButton": true,
+      "progressBar": true
+    }
+    toastr.error("{{session('error')}}")
+  </script>
+  @endif
 </body>
 
 </html>
-

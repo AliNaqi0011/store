@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('auth.login');
+});
+
+Route::middleware(['check.session.data'])->group(function () {
+    // Routes that require session data check
+    Route::get('/verification', [VerificationController::class, 'verification'])->name('verification');
+    Route::post('/verification', [VerificationController::class, 'VerifyEmaiLPhoneOtp'])->name('verify.email.phone.otp');
 });
 
 Route::get('/dashboard', function () {

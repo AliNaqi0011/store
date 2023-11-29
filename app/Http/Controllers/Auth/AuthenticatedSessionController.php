@@ -28,8 +28,14 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if(Auth::user()->email_status == 'verified') {
+            // dd('if');
+            return redirect()->intended(RouteServiceProvider::HOME);
+        } else {
+            // dd('else');
+            Auth::logout();
+            return redirect()->back()->with('error', 'Your email is not verified');
+        }
     }
 
     /**
