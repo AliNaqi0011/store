@@ -92,7 +92,7 @@ class RegisteredUserController extends Controller
             'phone' => $user->phone_number,
             'email' => $user->email,
             'otp' => $otp_code,
-            'code' => 2378,
+            'code' => $otpmobilecode,
         ]);
         // Store email and phone in the session
         Session::put('user_email', $user->email);
