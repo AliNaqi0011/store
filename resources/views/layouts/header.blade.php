@@ -129,6 +129,7 @@
                     <span class="nav-profile-name">{{Auth::user()->name}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                    <a class="dropdown-item" href="{{route('user.profile')}}"><i class="typcn typcn-user-outline text-primary"></i>My Profile</a>
                     <a class="dropdown-item">
                         <i class="typcn typcn-cog text-primary"></i>
                         Settings
