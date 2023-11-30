@@ -22,14 +22,14 @@
                             <div class="col-md-4">
                                 <label for=""><b>Email</b></label>
                                 <div class="form-group mt-md-0 mt-3">
-                                    <input type="text" name="email" value="{{$user->email}}" class="form-control form-control-md" id="email" placeholder="Enter Phone OTP">
+                                    <input type="text" name="email" value="{{$user->email}}" class="form-control form-control-md" id="email" placeholder="Enter Email">
                                 </div>
                                 <x-input-error :messages="$errors->get('email')" />
                             </div>
                             <div class="col-md-4">
                                 <label for=""><b>Phone Number</b></label>
                                 <div class="form-group mt-md-0 mt-3">
-                                    <input type="text" name="phone_number" value="{{$user->phone_number}}" class="form-control form-control-md" id="phone_number" placeholder="Enter Phone OTP">
+                                    <input type="text" name="phone_number" value="{{$user->phone_number}}" class="form-control form-control-md" id="phone_number" placeholder="Enter Phone Number">
                                 </div>
                                 <x-input-error :messages="$errors->get('phone_number')" />
                             </div>
@@ -50,9 +50,16 @@
                             <div class="col-md-4">
                                 <label for=""><b>Profile Title Name</b></label>
                                 <div class="form-group mt-md-0 mt-3">
-                                    <input type="text" name="profile_title_name" value="{{$user->profile_title_name}}" class="form-control form-control-md" id="profile_title_name" placeholder="Enter Phone OTP">
+                                    <input type="text" name="profile_title_name" value="{{$user->profile_title_name}}" class="form-control form-control-md" id="profile_title_name" placeholder="Enter Profile Title Name">
                                 </div>
                                 <x-input-error :messages="$errors->get('profile_title_name')" />
+                            </div>
+                            <div class="col-md-4">
+                                <label for=""><b>Password</b></label>
+                                <div class="form-group mt-md-0 mt-3">
+                                    <input type="password" name="password" class="form-control form-control-md" id="password" placeholder="Enter Password">
+                                </div>
+                                <x-input-error :messages="$errors->get('password')" />
                             </div>
                             <div class="col-md-4">
                                 <label for=""><b>Profile Image</b></label>

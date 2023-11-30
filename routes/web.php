@@ -37,6 +37,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/profile', [UserProfileController::class, 'index'])->name('user.profile');
         Route::get('/profile/edit/{id}', [UserProfileController::class, 'edit'])->name('user.profile.edit');
         Route::post('/profile/update/{id}', [UserProfileController::class, 'update'])->name('user.profile.update');
+
+        Route::get('/profile/social/create}', [UserProfileController::class, 'SocialCreate'])->name('user.profile.social.create');
+        Route::post('/profile/social/store}', [UserProfileController::class, 'SocialStore'])->name('user.profile.social.store');
+        Route::get('/profile/social/edit/{id}', [UserProfileController::class, 'SocialEdit'])->name('user.profile.social.edit');
+        Route::post('/profile/social/update/{id}', [UserProfileController::class, 'SocialUpdate'])->name('user.profile.social.update');
     });
     
 
