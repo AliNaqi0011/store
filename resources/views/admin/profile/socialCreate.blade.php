@@ -1,7 +1,14 @@
 @extends('layouts.main')
 @section('content')
 
-<div class="row mt-5">
+<div class="row">
+    <nav aria-label="breadcrumb" class="main-breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{route('user.profile')}}">User Profile</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Social Create</li>
+        </ol>
+    </nav>
     <div class="col-md-12">
         <div class="card">
             <div class="card-header text-center">
@@ -49,7 +56,7 @@
                             <x-input-error :messages="$errors->get('website')" />
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-md font-weight-medium auth-form-btn">Verify</button>
+                    <button class="btn btn-primary btn-md font-weight-medium auth-form-btn">Submit</button>
                 </form>
             </div>
         </div>

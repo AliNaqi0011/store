@@ -1,8 +1,15 @@
 @extends('layouts.main')
 @section('content')
 
-<div class="row mt-5">
+<div class="row">
         <!-- <div class="col-md-1"></div> -->
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{route('user.profile')}}">User</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit</li>
+            </ol>
+        </nav>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header text-center">
@@ -75,7 +82,7 @@
                         <!-- <div class="col-md-2 mt-3">
                             <button class="btn btn-block btn-primary btn-md font-weight-medium auth-form-btn">Verify</button>
                         </div> -->
-                        <button class="btn btn-primary btn-md font-weight-medium auth-form-btn">Verify</button>
+                        <button class="btn btn-primary btn-md font-weight-medium auth-form-btn">Submit</button>
                     </form>
 
                 </div>

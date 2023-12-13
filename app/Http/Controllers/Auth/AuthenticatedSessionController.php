@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Carbon;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,7 +30,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         if(Auth::user()->email_status == 'verified') {
-            // dd('if');
+            $currentDateTime = now();
+            $formattedDateTime = now()->format('Y-m-d H:i:s');
+            $loggedInUser = Auth::user();
+            $loggedInUser->last_login = $formattedDateTime;
+            $loggedInUser->save();
             return redirect()->intended(RouteServiceProvider::HOME);
         } else {
             // dd('else');

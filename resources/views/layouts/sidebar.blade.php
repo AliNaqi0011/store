@@ -3,7 +3,12 @@
         <li class="nav-item">
             <div class="d-flex sidebar-profile">
                 <div class="sidebar-profile-image">
-                    <img src="{{asset('template/images/faces/face29.png')}}" alt="image">
+                        @if (Auth::user()->profile_image)
+                            <img src="{{ asset('template/images/profile-images/' . Auth::user()->profile_image) }}" class="rounded-circle" alt="User Profile Image" width="150" height="150">
+                        @else
+                            <img src="{{asset('template/images/profile-images/avatar7.png')}}" alt="Admin" class="rounded-circle" width="150">
+                        @endif
+                    {{-- <img src="{{asset('template/images/faces/face29.png')}}" alt="image"> --}}
                     <span class="sidebar-status-indicator"></span>
                 </div>
                 <div class="sidebar-profile-name">
