@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\UserCode;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class VerificationController extends Controller
 {
@@ -26,6 +27,9 @@ class VerificationController extends Controller
         if($userCodeData->otp == $request->email_otp && $userCodeData->code == $request->phone_otp) {
             $user = User::where('email', $userEmail)->latest()->first();
             $user->email_status = 'verified';
+
+            $formattedDateTime = now()->format('Y-m-d H:i:s');
+            $user->last_login = $formattedDateTime;
             $user->save();
             Auth::login($user);
             return redirect()->route('dashboard')->with('success', 'Login Sucessfully');
