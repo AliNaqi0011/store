@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -35,11 +36,14 @@ class AuthenticatedSessionController extends Controller
             $loggedInUser = Auth::user();
             $loggedInUser->last_login = $formattedDateTime;
             $loggedInUser->save();
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return redirect()->route('dashboard')->with('success', 'Login Sucessfully');
+            // return redirect()->intended(RouteServiceProvider::HOME);
         } else {
-            // dd('else');
+            Session::put('user_email', Auth::user()->email);
+            Session::put('user_phone', Auth::user()->phone_number);
             Auth::logout();
-            return redirect()->back()->with('error', 'Your email is not verified');
+            return redirect()->route('verification')->with('error', 'Your Email and Phone number are not verified. Please verify your number and email');
+            // return redirect()->back()->with('error', 'Your email is not verified');
         }
     }
 

@@ -28,14 +28,14 @@
                         <div class="col-md-4">
                             <label for=""><b>Instagram</b></label>
                             <div class="form-group mt-md-0 mt-3">
-                                <input type="text" name="instagram" value="" class="form-control form-control-md" id="instagram" placeholder="Enter Phone OTP">
+                                <input type="text" name="instagram" value="" class="form-control form-control-md" id="instagram" placeholder="Enter your Instagram">
                             </div>
                             <x-input-error :messages="$errors->get('instagram')" />
                         </div>
                         <div class="col-md-4">
                             <label for=""><b>Twitter</b></label>
                             <div class="form-group mt-md-0 mt-3">
-                                <input type="text" name="twitter" value="" class="form-control form-control-md" id="twitter" placeholder="Enter Phone OTP">
+                                <input type="text" name="twitter" value="" class="form-control form-control-md" id="twitter" placeholder="Enter your Twitter">
                             </div>
                             <x-input-error :messages="$errors->get('twitter')" />
                         </div>
@@ -51,7 +51,7 @@
                         <div class="col-md-4">
                             <label for=""><b>Website</b></label>
                             <div class="form-group mt-md-0 mt-3">
-                                <input type="text" name="website" value="" class="form-control form-control-md" id="website" placeholder="Enter Phone OTP">
+                                <input type="text" name="website" value="" class="form-control form-control-md" id="website" placeholder="Enter your Website">
                             </div>
                             <x-input-error :messages="$errors->get('website')" />
                         </div>

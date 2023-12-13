@@ -46,12 +46,12 @@
                                     <input type="email" name="email" :value="old('email')"
                                         class="form-control form-control-lg" id="email" placeholder="Username">
                                 </div>
-                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('email')" style="color: red" class="mt-2" />
                                 <div class="form-group">
                                     <input type="password" name="password" class="form-control form-control-lg"
                                         id="password" placeholder="Password">
                                 </div>
-                                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('password')" style="color: red" class="mt-2" />
                                 <div class="mt-3">
                                     <button
                                         class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN
