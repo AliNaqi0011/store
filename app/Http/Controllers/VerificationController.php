@@ -37,8 +37,20 @@ class VerificationController extends Controller
         } else {
             return redirect()->back()->with('error', 'Invalid Otp');
         }
-    // dd($request->all());
-        // if()
-        // dd($request->all());
+    }
+
+    public function two_fa_verification(Request $request) {
+        return view('admin.two_fa_verification');
+    }
+
+    public function verify_two_fa_email_otp(Request $request) {
+        if($request->email_otp) {
+            $userEmail = Session::get('user_email');
+            $user = User::where('email', $userEmail)->latest()->first();
+            dd($user);
+            // if()
+        } else {
+            return redirect()->back()->with('error', 'Please enter Otp');
+        }
     }
 }

@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailVerification;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -31,9 +33,23 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         if(Auth::user()->email_status == 'verified') {
+            $loggedInUser = Auth::user();
+            if($loggedInUser->userSettings && $loggedInUser->userSettings->two_fa_type == 'email') {
+                $otp_code = random_int(100000, 999999);
+                $otp = [
+                    'email_otpCode'=>$otp_code,
+                ];
+                // Send Email Verification OTP
+                Mail::to($loggedInUser->email)->send(new EmailVerification($otp));
+                $loggedInUser->email_otp == $otp_code;
+                $loggedInUser->save();
+                Session::put('user_email', $loggedInUser->email);
+                Session::put('user_phone', $loggedInUser->phone_number);
+                Auth::logout();
+                return redirect()->route('two.fa.verification')->with('success', 'Verification Page');
+            }
             $currentDateTime = now();
             $formattedDateTime = now()->format('Y-m-d H:i:s');
-            $loggedInUser = Auth::user();
             $loggedInUser->last_login = $formattedDateTime;
             $loggedInUser->save();
             return redirect()->route('dashboard')->with('success', 'Login Sucessfully');

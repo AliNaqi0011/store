@@ -27,6 +27,10 @@ Route::middleware(['check.session.data'])->group(function () {
     Route::post('/verification', [VerificationController::class, 'VerifyEmaiLPhoneOtp'])->name('verify.email.phone.otp');
 });
 
+
+Route::get('/2fa-verification', [VerificationController::class, 'two_fa_verification'])->name('two.fa.verification');
+Route::post('/verify-2fa-vemail-otp', [VerificationController::class, 'verify_two_fa_email_otp'])->name('verify.email.otp.two.fa');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

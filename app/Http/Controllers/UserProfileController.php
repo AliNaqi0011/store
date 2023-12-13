@@ -68,11 +68,23 @@ class UserProfileController extends Controller
         $userSocial->instagram = $request->instagram;
         $userSocial->website = $request->website;
         $userSocial->save();
-        return redirect()->route('user.profile')->with('success', 'Social Profile updated successfully.');
+        return redirect()->route('user.profile')->with('success', 'Social Profile created successfully.');
     }
 
     public function SocialEdit($id) {
         $userSocial = UserSocial::find($id);
         return view('admin.profile.socialedit', compact('userSocial'));
+    }
+
+    public function SocialUpdate(Request $request, $id) {
+        $userSocial = UserSocial::find($id);
+        $userSocial->user_id = Auth::user()->id;
+        $userSocial->facebook = $request->facebook;
+        $userSocial->twitter = $request->twitter;
+        $userSocial->github = $request->github;
+        $userSocial->instagram = $request->instagram;
+        $userSocial->website = $request->website;
+        $userSocial->save();
+        return redirect()->route('user.profile')->with('success', 'Social Profile updated successfully.');
     }
 }
