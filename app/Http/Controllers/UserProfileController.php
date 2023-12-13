@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 class UserProfileController extends Controller
 {
     public function index() {
-        $userSocial = UserSocial::where('id', Auth::user()->id)->first();
+        $userSocial = UserSocial::where('user_id', Auth::user()->id)->first();
         $user = Auth::user();
         return view('admin.profile.index', compact('user', 'userSocial'));
     }
@@ -38,7 +38,7 @@ class UserProfileController extends Controller
 
         if ($user->profile_image && $request->profile_image) {
             $imagePath = public_path('template/images/profile-images/' . $user->profile_image);
-    
+
             // Check if the file exists before attempting to delete
             if (File::exists($imagePath)) {
                 File::delete($imagePath);

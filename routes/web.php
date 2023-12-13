@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\UserSettingsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,8 +43,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/profile/social/store}', [UserProfileController::class, 'SocialStore'])->name('user.profile.social.store');
         Route::get('/profile/social/edit/{id}', [UserProfileController::class, 'SocialEdit'])->name('user.profile.social.edit');
         Route::post('/profile/social/update/{id}', [UserProfileController::class, 'SocialUpdate'])->name('user.profile.social.update');
+
+        Route::get('/settings', [UserSettingsController::class, 'index'])->name('user.settings');
+        Route::get('/settings/create', [UserSettingsController::class, 'create'])->name('user.settings.create');
+        Route::post('/settings/store', [UserSettingsController::class, 'store'])->name('user.settings.store');
+        Route::get('/settings/edit/{id}', [UserSettingsController::class, 'edit'])->name('user.settings.edit');
+        Route::post('/settings/update/{id}', [UserSettingsController::class, 'update'])->name('user.settings.update');
     });
-    
+
 
 
 
