@@ -94,6 +94,7 @@
                                     <select name="two_fa_type" class="form-control form-control-lg">
                                         <option value="NULL">None</option>
                                         <option value="email">Email</option>
+                                        <option value="phone">Phone</option>
                                         <option value="qr_code">QR Code</option>
                                     </select>
                                 </div>

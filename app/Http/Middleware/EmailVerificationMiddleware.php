@@ -17,14 +17,9 @@ class EmailVerificationMiddleware
     public function handle($request, Closure $next)
     {
         // Add logging or debugging statements here
-    
-        // dd(Session::get('user_email'));
         if (!Session::has('user_phone') && !Session::has('user_email')) {
-            // dd(8923764928);
-            return redirect()->route('register');
+            return redirect()->route('login');
         }
         return $next($request);
-    
-        
     }
 }

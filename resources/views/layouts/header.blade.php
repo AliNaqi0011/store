@@ -23,6 +23,12 @@
                     Employee
                 </a>
             </li>
+            <li class="nav-item  d-none d-lg-flex">
+                <form method="post" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn"><i class="typcn typcn-power text-primary"></i>LogOut</button>
+                </form>
+            </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item d-none d-lg-flex  mr-2">

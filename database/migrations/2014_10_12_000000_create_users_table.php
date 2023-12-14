@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('email_status')->nullable();
             $table->string('email_otp')->nullable();
+            $table->string('phone_otp')->nullable();
             $table->string('last_login')->nullable();
             $table->rememberToken();
             $table->timestamps();
