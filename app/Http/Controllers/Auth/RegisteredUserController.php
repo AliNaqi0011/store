@@ -33,7 +33,34 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+
+
+
+
+
     public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'phone_number' => ['required', 'max:20'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'password' => Hash::make($request->password),
+        ]);
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        return redirect(RouteServiceProvider::HOME);
+    }
+    public function storeWithEmailAndPhoneVerification(Request $request): RedirectResponse
     {
         $user = User::where('email', $request->email)->first();
 
@@ -46,7 +73,7 @@ class RegisteredUserController extends Controller
                 return redirect()->route('verification')->with('error', 'Please verify your number and email');
             }
         }
-        
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'max:20'],
@@ -73,7 +100,7 @@ class RegisteredUserController extends Controller
         // Send Email Verification OTP
         Mail::to($user->email)->send(new EmailVerification($otp));
 
-        
+
         // Send Phone Number Verification OTP
         $otpmobilecode = mt_rand(1000, 9999); // Generate a random 4-digit OTP
         $to = $request->input('phone_number'); // The recipient's phone number
