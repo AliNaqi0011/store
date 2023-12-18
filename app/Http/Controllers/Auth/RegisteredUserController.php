@@ -17,6 +17,7 @@ use App\Mail\EmailVerification;
 use App\Models\UserCode;
 use Illuminate\Support\Facades\Session;
 use Twilio\Rest\Client;
+use App\Http\Controllers\MailController;
 
 class RegisteredUserController extends Controller
 {
@@ -51,8 +52,15 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
+            'verification_code' => sha1(time()),
             'password' => Hash::make($request->password),
         ]);
+
+        if($user != null){
+            MailController::sendSignupEmail($user->name, $user->email, $user->verification_code);
+            Auth::login($user);
+            return redirect()->route('email.verification.notice')->with('error', 'Please verify your email');
+        }
 
         event(new Registered($user));
 

@@ -23,6 +23,10 @@
             align-items: center;
         }
     </style>
+
+    <!-- Toaster Link -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
 <body>
@@ -121,6 +125,27 @@
     <script src="{{ asset('template/js/js/template.js') }}"></script>
     <script src="{{ asset('template/js/settings.js') }}"></script>
     <script src="{{ asset('template/js/todolist.js') }}"></script>
+
+    <!-- Toaster script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    @if (Session::has('success'))
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+            toastr.success("{{ session('success') }}")
+        </script>
+    @endif
+    @if (Session::has('error'))
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+            toastr.error("{{ session('error') }}")
+        </script>
+    @endif
 </body>
 
 </html>

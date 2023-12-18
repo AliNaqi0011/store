@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+Route::get('/verify', [VerificationController::class, 'verifyUser'])->name('verify.user');
+Route::get('/email/verify', [VerificationController::class, 'emailVerifyUser'])->name('email.verification.notice')->middleware('auth');
+Route::post('/resend/email/verify', [VerificationController::class, 'resendEmailVerifyUser'])->name('verification.resend')->middleware('auth');
+// Route::get('/verify','Auth\RegisterController@verifyUser')->name('verify.user');
 
 Route::middleware(['check.session.data'])->group(function () {
     // Routes that require session data check
