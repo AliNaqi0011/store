@@ -33,12 +33,51 @@ class VerificationController extends Controller
             $user->save();
             Auth::login($user);
             return redirect()->route('dashboard')->with('success', 'Login Sucessfully');
-            // dd($user);
         } else {
             return redirect()->back()->with('error', 'Invalid Otp');
         }
-    // dd($request->all());
-        // if()
-        // dd($request->all());
+    }
+
+    public function two_fa_verification(Request $request) {
+        return view('admin.two_fa_verification');
+    }
+
+    public function verify_two_fa_email_otp(Request $request) {
+        if($request->email_otp) {
+            $userEmail = Session::get('user_email');
+            $user = User::where('email', $userEmail)->latest()->first();
+            if($user->email_otp == $request->email_otp) {
+                Session::forget('user_email');
+                Session::forget('user_phone');
+                Auth::login($user);
+                return redirect()->route('dashboard')->with('success', 'Email OTP is Matched. Login Sucessfully');
+            } else {
+                return redirect()->back()->with('error', 'Please enter correct Otp');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Please enter Otp');
+        }
+    }
+
+    public function two_fa_phone_verification() {
+        return view('admin.two_fa_phone_verification');
+    }
+
+    public function verify_two_fa_phone_otp(Request $request) {
+        if($request->phone_otp) {
+            $userEmail = Session::get('user_email');
+            // $userPhone = Session::get('user_phone');
+            $user = User::where('email', $userEmail)->latest()->first();
+            if($user->phone_otp == $request->phone_otp) {
+                Session::forget('user_email');
+                Session::forget('user_phone');
+                Auth::login($user);
+                return redirect()->route('dashboard')->with('success', 'Phone OTP is Matched. Login Sucessfully');
+            } else {
+                return redirect()->back()->with('error', 'Please enter correct Otp');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Please enter Otp');
+        }
     }
 }

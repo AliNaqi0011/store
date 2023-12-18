@@ -73,6 +73,7 @@
                                     <select name="two_fa_type" class="form-control form-control-lg">
                                         <option value="NULL" <?php echo $userSetting->two_fa_type === 'NULL' ? 'selected' : ''; ?>>None</option>
                                         <option value="email" <?php echo $userSetting->two_fa_type === 'email' ? 'selected' : ''; ?>>Email</option>
+                                        <option value="phone" <?php echo $userSetting->two_fa_type === 'phone' ? 'selected' : ''; ?>>Phone</option>
                                         <option value="qr_code" <?php echo $userSetting->two_fa_type === 'qr_code' ? 'selected' : ''; ?>>QR Code</option>
                                     </select>
                                 </div>

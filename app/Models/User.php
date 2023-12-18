@@ -44,4 +44,10 @@ class User extends Authenticatable
         'password' => 'hashed',
         'last_login' => 'datetime',
     ];
+
+
+    public function userSettings()
+    {
+       return $this->hasOne(UserSetting::class);
+    }
 }
