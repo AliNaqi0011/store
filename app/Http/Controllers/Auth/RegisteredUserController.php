@@ -17,6 +17,7 @@ use App\Mail\EmailVerification;
 use App\Models\UserCode;
 use Illuminate\Support\Facades\Session;
 use Twilio\Rest\Client;
+use App\Http\Controllers\MailController;
 
 class RegisteredUserController extends Controller
 {
@@ -33,7 +34,41 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+
+
+
+
+
     public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'phone_number' => ['required', 'max:20'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'verification_code' => sha1(time()),
+            'password' => Hash::make($request->password),
+        ]);
+
+        if($user != null){
+            MailController::sendSignupEmail($user->name, $user->email, $user->verification_code);
+            Auth::login($user);
+            return redirect()->route('email.verification.notice')->with('error', 'Please verify your email');
+        }
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        return redirect(RouteServiceProvider::HOME);
+    }
+    public function storeWithEmailAndPhoneVerification(Request $request): RedirectResponse
     {
         $user = User::where('email', $request->email)->first();
 
@@ -46,7 +81,7 @@ class RegisteredUserController extends Controller
                 return redirect()->route('verification')->with('error', 'Please verify your number and email');
             }
         }
-        
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'max:20'],
@@ -73,7 +108,7 @@ class RegisteredUserController extends Controller
         // Send Email Verification OTP
         Mail::to($user->email)->send(new EmailVerification($otp));
 
-        
+
         // Send Phone Number Verification OTP
         $otpmobilecode = mt_rand(1000, 9999); // Generate a random 4-digit OTP
         $to = $request->input('phone_number'); // The recipient's phone number

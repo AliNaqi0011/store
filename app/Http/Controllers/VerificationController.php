@@ -9,9 +9,46 @@ use App\Models\UserCode;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use App\Http\Controllers\MailController;
 
 class VerificationController extends Controller
 {
+    public function verifyUser(Request $request){
+        $verification_code = \Illuminate\Support\Facades\Request::get('code');
+        $user = User::where(['verification_code' => $verification_code])->first();
+        if($user != null){
+            $user->is_verified = 1;
+            $user->save();
+            // User::where('email', Auth::user()->email)->update([
+            //     'is_verified' => 1,
+            // ]);
+            return redirect()->route('dashboard')->with('success', 'Your account is verified.!');
+        } else {
+            return redirect()->route('email.verification.notice')->with('error', 'This email is expired. Please resend Email!');
+        }
+
+        return redirect()->route('login')->with('error', 'Invalid verification code!');
+    }
+
+    public function emailVerifyUser(Request $request){
+        $user = Auth::user();
+        if($user->is_verified == 0) {
+            return view('admin.emailVerifyUser');
+        }
+        return redirect()->route('dashboard')->with('success', 'Your account is verified.!');
+
+    }
+
+    public function resendEmailVerifyUser(Request $request){
+        $user = Auth::user();
+        $user->verification_code = sha1(time());
+        $user->save();
+        if($user != null){
+            MailController::sendSignupEmail($user->name, $user->email, $user->verification_code);
+            return redirect()->back()->with('success', 'Please check email for verification link.');
+        }
+    }
+
     public function verification() {
         $userEmail = Session::get('user_email');
         $userPhone = Session::get('user_phone');

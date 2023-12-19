@@ -40,13 +40,13 @@
                                 <h4>Techesthete</h4>
                                 <h6 class="font-weight-light">Verification of an Email.</h6>
                             </div>
-                            @if (session('status') == 'verification-link-sent')
-                                <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+                            @if (session('success'))
+                                <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400" style="color: green">
                                     {{ __('A new verification link has been sent to the email address you provided during registration.') }}
                                 </div>
                             @endif
                             <div class="mt-4 flex items-center justify-between">
-                                <form method="POST" action="{{ route('verification.send') }}" class="mr-3">
+                                <form method="POST" action="{{ route('verification.resend') }}" class="mr-3">
                                     @csrf
                                     <div class="mt-3">
                                         <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Resend Verification Email</button>
