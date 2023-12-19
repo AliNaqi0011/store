@@ -23,6 +23,8 @@ class VerificationController extends Controller
             //     'is_verified' => 1,
             // ]);
             return redirect()->route('dashboard')->with('success', 'Your account is verified.!');
+        } else {
+            return redirect()->route('email.verification.notice')->with('error', 'This email is expired. Please resend Email!');
         }
 
         return redirect()->route('login')->with('error', 'Invalid verification code!');
