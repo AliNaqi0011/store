@@ -43,9 +43,9 @@ Route::middleware(['check.session.data'])->group(function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'check.email.verify'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'check.email.verify'])->group(function () {
 
 
     Route::group(['prefix' => '/user'], function () {

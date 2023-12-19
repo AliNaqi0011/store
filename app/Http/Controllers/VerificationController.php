@@ -16,26 +16,25 @@ class VerificationController extends Controller
     public function verifyUser(Request $request){
         $verification_code = \Illuminate\Support\Facades\Request::get('code');
         $user = User::where(['verification_code' => $verification_code])->first();
-        // dd($verification_code, $user);
         if($user != null){
             $user->is_verified = 1;
             $user->save();
             // User::where('email', Auth::user()->email)->update([
             //     'is_verified' => 1,
             // ]);
-            return redirect()->route('login')->with('success', 'Your account is verified. Please login!');
+            return redirect()->route('dashboard')->with('success', 'Your account is verified.!');
         }
 
         return redirect()->route('login')->with('error', 'Invalid verification code!');
     }
 
     public function emailVerifyUser(Request $request){
-        // dd();
         $user = Auth::user();
-        if($user->is_verified = 1) {
-
+        if($user->is_verified == 0) {
+            return view('admin.emailVerifyUser');
         }
-        return view('admin.emailVerifyUser');
+        return redirect()->route('dashboard')->with('success', 'Your account is verified.!');
+
     }
 
     public function resendEmailVerifyUser(Request $request){

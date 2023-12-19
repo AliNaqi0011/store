@@ -75,6 +75,7 @@ class AuthenticatedSessionController extends Controller
                 Auth::logout();
                 return redirect()->route('two.fa.phone.verification')->with('success', 'Otp is sent to your mobile number. Please enter otp here!');
             }
+            return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'Login Successfully!');
         } else {
             Auth::login($loggedInUser);
             return redirect()->route('email.verification.notice')->with('error', 'Your email is not verified. Please verify your email first');
