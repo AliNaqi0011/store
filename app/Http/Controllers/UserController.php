@@ -35,4 +35,30 @@ class UserController extends Controller
 
         return redirect()->route('users')->with('success', 'User created successfully.!');
     }
+
+    public function edit($id){
+        $users = User::where('id',$id)->first();
+        return view('admin.users.edit', compact('users'));
+    }
+    public function update(Request $request)
+    {
+
+        $user = User::find($request->id);
+
+        if ($user) {
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone_number = $request->phone_number;
+            $user->password = Hash::make($request->password);
+
+            $user->save();
+
+        }
+            return redirect()->route('users')->with('success', 'User Updated successfully.!');
+    }
+
+    public function delete($id){
+        $users = User::where('id',$id)->delete();
+        return redirect()->route('users')->with('error', 'User delete successfully.!');
+    }
 }
