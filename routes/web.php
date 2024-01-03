@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserSettingsController;
@@ -71,8 +72,19 @@ Route::middleware(['auth', 'check.email.verify'])->group(function () {
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
         Route::post('/update', [UserController::class, 'update'])->name('users.update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
+
+
+
     });
 
+    Route::group(['prefix' => '/blog'], function () {
+        Route::get('/listing',[BlogController::class, 'listing'])->name('blog.listing');
+        Route::get('/create',[BlogController::class, 'create'])->name('blog.create');
+        Route::post('/store',[BlogController::class, 'store'])->name('blog.store');
+        Route::get('/edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
+        Route::post('/update', [BlogController::class, 'update'])->name('blog.update');
+        Route::get('/delete/{id}', [BlogController::class, 'delete'])->name('blog.delete');
+    });
 
 
 

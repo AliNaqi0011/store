@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\UserCreateNotification;
 
 class UserController extends Controller
 {
@@ -32,6 +32,8 @@ class UserController extends Controller
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
         ]);
+
+        $user->notify(new UserCreateNotification($user));
 
         return redirect()->route('users')->with('success', 'User created successfully.!');
     }
