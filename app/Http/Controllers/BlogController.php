@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Blogs;
+use App\Notifications\BlogCreateNotification;
+use App\Notifications\BlogDeleteNotification;
+use App\Notifications\BlogUpdateNotification;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -30,6 +32,7 @@ class BlogController extends Controller
         // Save the blog post
         $blog->save();
 
+        $blog->notify(new BlogCreateNotification($blog));
         return redirect()->route('blog.listing')->with(['success' => 'Blog Added successfully!']);
     }
 
@@ -51,13 +54,30 @@ class BlogController extends Controller
             $blog->meta_description = $request->description;
 
             $blog->save();
+            $blog->notify(new BlogUpdateNotification($blog));
 
         }
         return redirect()->route('blog.listing')->with('success', 'Blog Updated successfully.!');
     }
 
-    public function delete($id){
-        Blogs::where('id',$id)->delete();
-        return redirect()->route('blog.listing')->with('error', 'Blog delete successfully.!');
+    public function delete($id)
+    {
+        // Fetch the blog post before deleting
+        $blog = Blogs::find($id);
+
+        // Check if the blog post exists before proceeding
+        if ($blog) {
+            // Delete the blog post
+            $blog->delete();
+
+            // Send notification using the fetched blog post instance
+            $blog->notify(new BlogDeleteNotification($blog));
+
+            return redirect()->route('blog.listing')->with('error', 'Blog deleted successfully!');
+        } else {
+            // Handle the case where the blog post with the given ID doesn't exist
+            return redirect()->route('blog.listing')->with('error', 'Blog not found!');
+        }
     }
+
 }
