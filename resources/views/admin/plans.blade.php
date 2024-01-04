@@ -1,51 +1,46 @@
-@extends('layouts.main')
-@section('content')
-<div class="container">
+<!DOCTYPE html>
+<html lang="en">
 
-    <section>
-        <div class="container py-5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('css/pricing-plan.css')}}">
+</head>
 
-            <header class="text-center mb-5 text-white">
-                <div class="row">
-{{--                    <div class="col-lg-12 mx-auto">--}}
-{{--                        <h1>Laravel 9 Cashier Stripe Subscription</h1>--}}
-{{--                        <h3>PRICING</h3>--}}
-{{--                    </div>--}}
-                </div>
-            </header>
-
-            <div class="row text-center align-items-end">
-                @foreach($plans as $plan)
-                    <div class="col-lg-4 mb-5 mb-lg-0">
-                        <div class="bg-white p-5 rounded-lg shadow">
-                            <h1 class="h6 text-uppercase font-weight-bold mb-4">{{ $plan->name }}</h1>
-                            <h2 class="h1 font-weight-bold">${{ $plan->price }}<span class="text-small font-weight-normal ml-2">/ month</span></h2>
-
-                            <div class="custom-separator my-4 mx-auto bg-primary"></div>
-
-                            <ul class="list-unstyled my-5 text-small text-left font-weight-normal">
-                                <li class="mb-3">
-                                    <i class="fa fa-check mr-2 text-primary"></i> Lorem ipsum dolor sit amet</li>
-                                <li class="mb-3">
-                                    <i class="fa fa-check mr-2 text-primary"></i> Sed ut perspiciatis</li>
-                                <li class="mb-3">
-                                    <i class="fa fa-check mr-2 text-primary"></i> At vero eos et accusamus</li>
-                                <li class="mb-3">
-                                    <i class="fa fa-check mr-2 text-primary"></i> Nam libero tempore</li>
-                                <li class="mb-3">
-                                    <i class="fa fa-check mr-2 text-primary"></i> Sed ut perspiciatis</li>
-                                <li class="mb-3 text-muted">
-                                    <i class="fa fa-times mr-2"></i>
-                                    <del>Sed ut perspiciatis</del>
-                                </li>
-                            </ul>
-                            <a href="{{ route('plans.show', $plan->slug) }}" class="btn btn-primary btn-block shadow rounded-pill">Buy Now</a>
-                        </div>
+<body>
+<main>
+    <div class="container">
+        <h5 class="text-center pricing-table-subtitle">PRICING PLAN</h5>
+        <h1 class="text-center pricing-table-title">Pricing Table</h1>
+        <div class="row">
+            @foreach($plans as $plan)
+            <div class="col-md-4">
+                <div class="card pricing-card pricing-plan-basic">
+                    <div class="card-body">
+                        <p class="pricing-plan-title">{{ $plan->name }}</p>
+                        <h3 class="pricing-plan-cost ml-auto">${{ $plan->price }}</h3>
+                        <ul class="pricing-plan-features">
+                            <li>Unlimited conferences</li>
+                            <li>100 participants max</li>
+                            <li>Custom Hold Music</li>
+                            <li>10 participants max</li>
+                        </ul>
+                        <a href="{{ route('plans.show', $plan->slug) }}" class="btn pricing-plan-purchase-btn">Buy Now</a>
                     </div>
-                @endforeach
+                </div>
             </div>
+            @endforeach
         </div>
-    </section>
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
 
-</div>
-@endsection
+</html>

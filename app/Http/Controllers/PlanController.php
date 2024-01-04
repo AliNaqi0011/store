@@ -47,6 +47,6 @@ class PlanController extends Controller
         $subscription = $request->user()->newSubscription($request->plan, $plan->stripe_plan)
             ->create($request->token);
 
-        return view("admin.subscription_success");
+        return redirect()->route('blog.listing')->with('success', 'Subscription Done!');
     }
 }

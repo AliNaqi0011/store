@@ -50,7 +50,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'check.email.verify'])->group(function () {
 
-    Route::get('plans', [PlanController::class, 'index']);
+    Route::get('plans', [PlanController::class, 'index'])->name('plans');
     Route::get('plans/{plan}', [PlanController::class, 'show'])->name("plans.show");
     Route::post('subscription', [PlanController::class, 'subscription'])->name("subscription.create");
 
