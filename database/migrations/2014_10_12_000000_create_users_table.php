@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone_number');
+            $table->string('phone_number')->nullable();
             $table->string('address')->nullable();
             $table->string('profile_image')->nullable();
             $table->string('profile_title_name')->nullable();
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('email_status')->nullable();
             $table->string('email_otp')->nullable();
             $table->string('phone_otp')->nullable();
+            $table->boolean('phone_verified')->default(0);
             $table->string('last_login')->nullable();
             $table->string('verification_code')->nullable();
             $table->integer('is_verified')->default(0);

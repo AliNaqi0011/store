@@ -60,4 +60,64 @@ class UserSettingsController extends Controller
         $userSetting->save();
         return redirect()->route('user.settings')->with('success', 'User settings updated successfully.');
     }
+
+    public function twoFaStore(Request $request) {
+        $userSettings = UserSetting::where('user_id', Auth::user()->id)->first();
+        if($userSettings) {
+            if($request->selected_value == 'email_enable') {
+                $userSettings->two_fa_type = 'email_enable';
+                $userSettings->save();
+                return response()->json([
+                    'status' => true,
+                    'message' => "Setting Email is changed",
+                    'selectedValue' => $request->selected_value
+                ], 200);
+            } elseif($request->selected_value == 'phone_enable') {
+                $user  = Auth::user();
+                if($user->phone_number && $user->phone_verified == 1) {
+                    $userSettings->two_fa_type = 'phone_enable';
+                    $userSettings->save();
+                    return response()->json([
+                        'status' => true,
+                        'message' => "Setting Email is changed",
+                        'selectedValue' => $request->selected_value
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'status' => false,
+                        'message' => "Setting Email is changed",
+                        'selectedValue' => $request->selected_value
+                    ], 200);
+                }
+            } else {
+                $userSettings->two_fa_type = NULL;
+                $userSettings->save();
+                return response()->json([
+                    'status' => true,
+                    'message' => "Setting Null is changed",
+                    'selectedValue' => $request->selected_value
+                ], 200);
+            }
+        } else {
+            $userSetting = new UserSetting();
+        }
+    }
+
+    public function get() {
+        $user = Auth::user();
+        $userSettings = UserSetting::where('user_id', $user->id)->first();
+        // dd($userSettings);
+        if($userSettings) {
+            return response()->json([
+                'message' => 'Value stored successfully',
+                'user' => $user,
+                'twoFaValue' => $userSettings->two_fa_type,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'User setting not found.',
+            ]);
+        }
+
+    }
 }

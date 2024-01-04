@@ -24,6 +24,7 @@ Route::get('/', function () {
 Route::get('/verify', [VerificationController::class, 'verifyUser'])->name('verify.user');
 Route::get('/email/verify', [VerificationController::class, 'emailVerifyUser'])->name('email.verification.notice')->middleware('auth');
 Route::post('/resend/email/verify', [VerificationController::class, 'resendEmailVerifyUser'])->name('verification.resend')->middleware('auth');
+
 // Route::get('/verify','Auth\RegisterController@verifyUser')->name('verify.user');
 
 Route::middleware(['check.session.data'])->group(function () {
@@ -37,6 +38,8 @@ Route::middleware(['check.session.data'])->group(function () {
     Route::get('/2fa-phone-verification', [VerificationController::class, 'two_fa_phone_verification'])->name('two.fa.phone.verification');
     Route::post('/verify-2fa-phone-otp', [VerificationController::class, 'verify_two_fa_phone_otp'])->name('verify.phone.otp.two.fa');
 
+
+
 });
 
 
@@ -47,7 +50,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified', 'check.email.verify'])->name('dashboard');
 
 Route::middleware(['auth', 'check.email.verify'])->group(function () {
-
+    Route::post('/phone/verification', [VerificationController::class, 'phone_verification'])->name('phone.verifications');
+    Route::post('/phone/verify', [VerificationController::class, 'check_phone_verification'])->name('check.phone.otp');
 
     Route::group(['prefix' => '/user'], function () {
         Route::get('/profile', [UserProfileController::class, 'index'])->name('user.profile');
@@ -64,6 +68,8 @@ Route::middleware(['auth', 'check.email.verify'])->group(function () {
         Route::post('/settings/store', [UserSettingsController::class, 'store'])->name('user.settings.store');
         Route::get('/settings/edit/{id}', [UserSettingsController::class, 'edit'])->name('user.settings.edit');
         Route::post('/settings/update/{id}', [UserSettingsController::class, 'update'])->name('user.settings.update');
+        Route::post('/store-radio-value', [UserSettingsController::class, 'twoFaStore'])->name('user.profile.2fa.store');
+        Route::get('/get-radio-value', [UserSettingsController::class, 'get'])->name('get.user.profile.2fa.store');
 
         Route::get('/', [UserController::class, 'index'])->name('users');
         Route::get('/create', [UserController::class, 'create'])->name('users.create');
