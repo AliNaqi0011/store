@@ -74,6 +74,9 @@ Route::middleware(['auth', 'check.email.verify'])->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users');
         Route::get('/create', [UserController::class, 'create'])->name('users.create');
         Route::post('/store', [UserController::class, 'store'])->name('users.store');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+        Route::post('/update', [UserController::class, 'update'])->name('users.update');
+        Route::get('/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
     });
 
 

@@ -67,15 +67,11 @@
                                                 {{ $user->phone_number }}
                                             </td>
                                             <td>
-                                                <button type="button"
-                                                    class="btn btn-outline-secondary btn-rounded btn-icon">
-                                                    <i class="typcn typcn-archive text-danger"></i>
-                                                </button>
 
-                                                <button type="button"
-                                                    class="btn btn-outline-secondary btn-rounded btn-icon">
-                                                    <i class="typcn typcn-edit  text-primary"></i>
-                                                </button>
+                                                <a href="{{route('users.delete',$user->id)}}"  class=""><i class="typcn typcn-archive text-danger"></i> </a>
+                                                &nbsp &nbsp
+                                                <a href="{{route('users.edit',$user->id)}}" class=""><i class="typcn typcn-edit  text-primary"></i> </a>
+
                                             </td>
                                         </tr>
                                     @endforeach
