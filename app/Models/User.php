@@ -52,4 +52,13 @@ class User extends Authenticatable
     {
        return $this->hasOne(UserSetting::class);
     }
+
+    publicn function roles(){
+        return $this->belongsToMany(Role::class,'user_roles');
+    }
+
+    public function hasRole($role){
+        return $this->roles->contains('role',$role);
+    }
+
 }
