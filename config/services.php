@@ -37,4 +37,9 @@ return [
         'from' => env('TWILIO_PHONE_NUMBER'),
     ],
 
+    'stripe' => [
+        'secret' => env('STRIPE_SECRET_KEY'),
+        // Other Stripe configuration options
+    ],
+
 ];

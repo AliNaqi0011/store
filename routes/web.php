@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserSettingsController;
@@ -49,6 +50,9 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'check.email.verify'])->group(function () {
 
+    Route::get('plans', [PlanController::class, 'index'])->name('plans');
+    Route::get('plans/{plan}', [PlanController::class, 'show'])->name("plans.show");
+    Route::post('subscription', [PlanController::class, 'subscription'])->name("subscription.create");
 
     Route::group(['prefix' => '/user'], function () {
         Route::get('/profile', [UserProfileController::class, 'index'])->name('user.profile');

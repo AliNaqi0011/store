@@ -76,7 +76,7 @@ class BlogController extends Controller
             return redirect()->route('blog.listing')->with('error', 'Blog deleted successfully!');
         } else {
             // Handle the case where the blog post with the given ID doesn't exist
-            return redirect()->route('blog.listing')->with('error', 'Blog not found!');
+            return redirect()->route('dashboard')->with('error', 'Blog not found!');
         }
     }
 
