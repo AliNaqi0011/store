@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('email_status')->nullable();
             $table->string('email_otp')->nullable();
             $table->string('phone_otp')->nullable();
+            $table->boolean('phone_verified')->default(0);
             $table->string('last_login')->nullable();
             $table->string('verification_code')->nullable();
             $table->integer('is_verified')->default(0);
