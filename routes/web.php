@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserSettingsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +24,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+
+Route::get('/google/login', [SocialiteController::class, 'googleLogin'])->name('google.login');
+Route::get('/auth/google/callback', [SocialiteController::class, 'googleCallback'])->name('google.callback');
+
+
 Route::get('/verify', [VerificationController::class, 'verifyUser'])->name('verify.user');
 Route::get('/email/verify', [VerificationController::class, 'emailVerifyUser'])->name('email.verification.notice')->middleware('auth');
 Route::post('/resend/email/verify', [VerificationController::class, 'resendEmailVerifyUser'])->name('verification.resend')->middleware('auth');
@@ -53,6 +61,10 @@ Route::middleware(['auth', 'check.email.verify'])->group(function () {
     Route::post('/phone/verification', [VerificationController::class, 'phone_verification'])->name('phone.verifications');
     Route::post('/phone/verify', [VerificationController::class, 'check_phone_verification'])->name('check.phone.otp');
 
+    Route::get('plans', [PlanController::class, 'index'])->name('plans');
+    Route::get('plans/{plan}', [PlanController::class, 'show'])->name("plans.show");
+    Route::post('subscription', [PlanController::class, 'subscription'])->name("subscription.create");
+
     Route::group(['prefix' => '/user'], function () {
         Route::get('/profile', [UserProfileController::class, 'index'])->name('user.profile');
         Route::get('/profile/edit/{id}', [UserProfileController::class, 'edit'])->name('user.profile.edit');
@@ -77,8 +89,19 @@ Route::middleware(['auth', 'check.email.verify'])->group(function () {
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
         Route::post('/update', [UserController::class, 'update'])->name('users.update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
+
+
+
     });
 
+    Route::group(['prefix' => '/blog'], function () {
+        Route::get('/listing',[BlogController::class, 'listing'])->name('blog.listing');
+        Route::get('/create',[BlogController::class, 'create'])->name('blog.create');
+        Route::post('/store',[BlogController::class, 'store'])->name('blog.store');
+        Route::get('/edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
+        Route::post('/update', [BlogController::class, 'update'])->name('blog.update');
+        Route::get('/delete/{id}', [BlogController::class, 'delete'])->name('blog.delete');
+    });
 
 
 

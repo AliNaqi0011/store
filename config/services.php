@@ -37,4 +37,16 @@ return [
         'from' => env('TWILIO_PHONE_NUMBER'),
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_SECRET_ID'),
+        'redirect' => 'http://127.0.0.1:8000/auth/google/callback',
+    ],
+
+    'stripe' => [
+        'client_id' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+        // Other Stripe configuration options
+    ],
+
 ];

@@ -97,10 +97,16 @@
                                         </label>
                                     </div>
                                 </div>
+                                <div class="mb-2">
+                                    <button type="button" class="btn btn-block btn-facebook auth-form-btn">
+                                        <i class="typcn typcn-social-facebook-circular mr-2"></i>Connect using facebook
+                                    </button>
+                                    <a href="{{route('google.login')}}" class="btn btn-block btn-danger">
+                                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                                    </a>
+                                </div>
                                 <div class="mt-3">
-                                    <button
-                                        class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN
-                                        UP</button>
+                                    <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN UP</button>
                                 </div>
                                 <div class="text-center mt-4 font-weight-light">
                                     Already have an account? <a href="{{ route('login') }}"

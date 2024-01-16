@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\UserCreateNotification;
+use App\Notifications\UserUpdateNotification;
+use App\Notifications\UserDeleteNotification;
 
 class UserController extends Controller
 {
@@ -33,6 +35,8 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->notify(new UserCreateNotification($user));
+
         return redirect()->route('users')->with('success', 'User created successfully.!');
     }
 
@@ -52,13 +56,15 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
 
             $user->save();
-
-        }
+            $user->notify(new UserUpdateNotification($user));
             return redirect()->route('users')->with('success', 'User Updated successfully.!');
+        }
     }
 
     public function delete($id){
-        $users = User::where('id',$id)->delete();
+        $user = User::find($id);
+        $user->notify(new UserDeleteNotification($user));
+        $user->delete();
         return redirect()->route('users')->with('error', 'User delete successfully.!');
     }
 }
