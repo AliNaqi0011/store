@@ -44,7 +44,8 @@ return [
     ],
 
     'stripe' => [
-        'secret' => env('STRIPE_SECRET_KEY'),
+        'client_id' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
         // Other Stripe configuration options
     ],
 
