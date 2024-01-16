@@ -6,6 +6,7 @@ use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserSettingsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+
+Route::get('/google/login', [SocialiteController::class, 'googleLogin'])->name('google.login');
+Route::get('/auth/google/callback', [SocialiteController::class, 'googleCallback'])->name('google.callback');
+
+
 Route::get('/verify', [VerificationController::class, 'verifyUser'])->name('verify.user');
 Route::get('/email/verify', [VerificationController::class, 'emailVerifyUser'])->name('email.verification.notice')->middleware('auth');
 Route::post('/resend/email/verify', [VerificationController::class, 'resendEmailVerifyUser'])->name('verification.resend')->middleware('auth');

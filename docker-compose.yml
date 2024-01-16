@@ -1,8 +1,8 @@
 version: '3'
 services:
     web:
-        container_name: laravel-boilerplate
-        image: ${DOCKER_REGISTRY}laravel-boilerplate
+        container_name: montech
+        image: ${DOCKER_REGISTRY}montech
         build:
             context: .
             dockerfile: ./docker/php/Dockerfile

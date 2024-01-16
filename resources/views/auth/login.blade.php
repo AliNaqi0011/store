@@ -70,6 +70,9 @@
                                     <button type="button" class="btn btn-block btn-facebook auth-form-btn">
                                         <i class="typcn typcn-social-facebook-circular mr-2"></i>Connect using facebook
                                     </button>
+                                    <a href="{{route('google.login')}}" class="btn btn-block btn-danger">
+                                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                                    </a>
                                 </div>
                                 <div class="text-center mt-4 font-weight-light">
                                     Don't have an account? <a href="{{ route('register') }}"

@@ -45,6 +45,7 @@
                                     <button class="btn btn-block btn-primary btn-md font-weight-medium auth-form-btn">Verify</button>
                                 </div>
                             </div> -->
+
                         </div>
                         <div class="row">
                             <div class="col-md-4">
