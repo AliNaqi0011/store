@@ -53,7 +53,7 @@ class User extends Authenticatable
        return $this->hasOne(UserSetting::class);
     }
 
-    publicn function roles(){
+    public function roles(){
         return $this->belongsToMany(Role::class,'user_roles');
     }
 
