@@ -35,5 +35,11 @@ class DatabaseSeeder extends Seeder
             'permission' => 'view_user',
         ]);
 
+        // E-commerce seeders
+        $this->call([
+            CategorySeeder::class,
+            BrandSeeder::class,
+            ProductSeeder::class,
+        ]);
     }
 }

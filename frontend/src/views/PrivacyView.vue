@@ -1,0 +1,215 @@
+<template>
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50">
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-20">
+      <div class="max-w-4xl mx-auto px-4 text-center">
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-white bg-opacity-20 rounded-full mb-6">
+          <i class="fas fa-shield-alt text-3xl"></i>
+        </div>
+        <h1 class="text-5xl font-bold mb-4">Privacy Policy</h1>
+        <p class="text-xl text-indigo-100">Your privacy is important to us. Learn how we protect your information.</p>
+        <p class="text-sm text-indigo-200 mt-4">Last updated: January 1, 2024</p>
+      </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 py-16">
+      <!-- Table of Contents -->
+      <div class="bg-white rounded-3xl shadow-xl p-8 mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+          <i class="fas fa-list text-blue-600 mr-3"></i>Table of Contents
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <a href="#information-collection" class="flex items-center p-3 rounded-lg hover:bg-blue-50 transition-colors">
+            <i class="fas fa-database text-blue-600 mr-3"></i>Information We Collect
+          </a>
+          <a href="#information-use" class="flex items-center p-3 rounded-lg hover:bg-blue-50 transition-colors">
+            <i class="fas fa-cogs text-blue-600 mr-3"></i>How We Use Information
+          </a>
+          <a href="#information-sharing" class="flex items-center p-3 rounded-lg hover:bg-blue-50 transition-colors">
+            <i class="fas fa-share-alt text-blue-600 mr-3"></i>Information Sharing
+          </a>
+          <a href="#data-security" class="flex items-center p-3 rounded-lg hover:bg-blue-50 transition-colors">
+            <i class="fas fa-lock text-blue-600 mr-3"></i>Data Security
+          </a>
+          <a href="#cookies" class="flex items-center p-3 rounded-lg hover:bg-blue-50 transition-colors">
+            <i class="fas fa-cookie-bite text-blue-600 mr-3"></i>Cookies & Tracking
+          </a>
+          <a href="#your-rights" class="flex items-center p-3 rounded-lg hover:bg-blue-50 transition-colors">
+            <i class="fas fa-user-shield text-blue-600 mr-3"></i>Your Rights
+          </a>
+        </div>
+      </div>
+
+      <!-- Privacy Policy Content -->
+      <div class="space-y-12">
+        <!-- Information Collection -->
+        <section id="information-collection" class="bg-white rounded-3xl shadow-xl p-8">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4">
+              <i class="fas fa-database text-white"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900">Information We Collect</h2>
+          </div>
+          
+          <div class="space-y-6">
+            <div class="border-l-4 border-blue-500 pl-6">
+              <h3 class="text-xl font-bold text-gray-900 mb-3">Personal Information</h3>
+              <ul class="space-y-2 text-gray-600">
+                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Name and contact information</li>
+                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Billing and shipping addresses</li>
+                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Payment information (securely processed)</li>
+                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Account credentials</li>
+              </ul>
+            </div>
+            
+            <div class="border-l-4 border-green-500 pl-6">
+              <h3 class="text-xl font-bold text-gray-900 mb-3">Usage Information</h3>
+              <ul class="space-y-2 text-gray-600">
+                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Browsing behavior and preferences</li>
+                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Device and browser information</li>
+                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>IP address and location data</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Information Use -->
+        <section id="information-use" class="bg-white rounded-3xl shadow-xl p-8">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-4">
+              <i class="fas fa-cogs text-white"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900">How We Use Your Information</h2>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-4">
+              <div class="p-4 bg-blue-50 rounded-xl">
+                <h3 class="font-bold text-gray-900 mb-2">🛒 Order Processing</h3>
+                <p class="text-gray-600 text-sm">Process and fulfill your orders, handle payments, and provide customer support.</p>
+              </div>
+              <div class="p-4 bg-green-50 rounded-xl">
+                <h3 class="font-bold text-gray-900 mb-2">📧 Communication</h3>
+                <p class="text-gray-600 text-sm">Send order updates, promotional offers, and important account information.</p>
+              </div>
+              <div class="p-4 bg-purple-50 rounded-xl">
+                <h3 class="font-bold text-gray-900 mb-2">🎯 Personalization</h3>
+                <p class="text-gray-600 text-sm">Customize your shopping experience and recommend relevant products.</p>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="p-4 bg-orange-50 rounded-xl">
+                <h3 class="font-bold text-gray-900 mb-2">📊 Analytics</h3>
+                <p class="text-gray-600 text-sm">Analyze website usage to improve our services and user experience.</p>
+              </div>
+              <div class="p-4 bg-red-50 rounded-xl">
+                <h3 class="font-bold text-gray-900 mb-2">🔒 Security</h3>
+                <p class="text-gray-600 text-sm">Protect against fraud, unauthorized access, and other security threats.</p>
+              </div>
+              <div class="p-4 bg-indigo-50 rounded-xl">
+                <h3 class="font-bold text-gray-900 mb-2">⚖️ Legal Compliance</h3>
+                <p class="text-gray-600 text-sm">Comply with legal obligations and enforce our terms of service.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Data Security -->
+        <section id="data-security" class="bg-white rounded-3xl shadow-xl p-8">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-red-600 rounded-xl flex items-center justify-center mr-4">
+              <i class="fas fa-lock text-white"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900">Data Security</h2>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl">
+              <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-shield-alt text-white text-2xl"></i>
+              </div>
+              <h3 class="font-bold text-gray-900 mb-2">SSL Encryption</h3>
+              <p class="text-gray-600 text-sm">All data transmission is protected with industry-standard SSL encryption.</p>
+            </div>
+            <div class="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl">
+              <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-server text-white text-2xl"></i>
+              </div>
+              <h3 class="font-bold text-gray-900 mb-2">Secure Storage</h3>
+              <p class="text-gray-600 text-sm">Your data is stored on secure servers with restricted access controls.</p>
+            </div>
+            <div class="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl">
+              <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-user-lock text-white text-2xl"></i>
+              </div>
+              <h3 class="font-bold text-gray-900 mb-2">Access Control</h3>
+              <p class="text-gray-600 text-sm">Only authorized personnel have access to your personal information.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Your Rights -->
+        <section id="your-rights" class="bg-white rounded-3xl shadow-xl p-8">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mr-4">
+              <i class="fas fa-user-shield text-white"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900">Your Privacy Rights</h2>
+          </div>
+          
+          <div class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="p-6 border-2 border-blue-200 rounded-2xl hover:border-blue-400 transition-colors">
+                <h3 class="font-bold text-gray-900 mb-3 flex items-center">
+                  <i class="fas fa-eye text-blue-600 mr-3"></i>Access Your Data
+                </h3>
+                <p class="text-gray-600">Request a copy of the personal information we have about you.</p>
+              </div>
+              <div class="p-6 border-2 border-green-200 rounded-2xl hover:border-green-400 transition-colors">
+                <h3 class="font-bold text-gray-900 mb-3 flex items-center">
+                  <i class="fas fa-edit text-green-600 mr-3"></i>Update Information
+                </h3>
+                <p class="text-gray-600">Correct or update your personal information at any time.</p>
+              </div>
+              <div class="p-6 border-2 border-red-200 rounded-2xl hover:border-red-400 transition-colors">
+                <h3 class="font-bold text-gray-900 mb-3 flex items-center">
+                  <i class="fas fa-trash text-red-600 mr-3"></i>Delete Your Data
+                </h3>
+                <p class="text-gray-600">Request deletion of your personal information (subject to legal requirements).</p>
+              </div>
+              <div class="p-6 border-2 border-purple-200 rounded-2xl hover:border-purple-400 transition-colors">
+                <h3 class="font-bold text-gray-900 mb-3 flex items-center">
+                  <i class="fas fa-ban text-purple-600 mr-3"></i>Opt-Out
+                </h3>
+                <p class="text-gray-600">Unsubscribe from marketing communications and data processing.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl shadow-xl p-12 text-white text-center">
+          <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-envelope text-3xl"></i>
+          </div>
+          <h2 class="text-3xl font-bold mb-4">Questions About Privacy?</h2>
+          <p class="text-xl text-blue-100 mb-8">Contact our privacy team for any questions or concerns</p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <router-link to="/contact" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition-all">
+              <i class="fas fa-envelope mr-2"></i>Contact Us
+            </router-link>
+            <a href="mailto:privacy@nexshop.com" class="bg-white bg-opacity-20 text-white px-8 py-4 rounded-xl font-bold hover:bg-opacity-30 transition-all">
+              <i class="fas fa-shield-alt mr-2"></i>privacy@nexshop.com
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'PrivacyView'
+}
+</script>

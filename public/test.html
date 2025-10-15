@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexShop API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .endpoint { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        .response { margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 3px; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <h1>🛒 NexShop E-Commerce API Test</h1>
+    
+    <div class="endpoint">
+        <h3>Categories</h3>
+        <button onclick="testEndpoint('/api/categories', 'categories')">Get Categories</button>
+        <div id="categories" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3>Products</h3>
+        <button onclick="testEndpoint('/api/products', 'products')">Get Products</button>
+        <button onclick="testEndpoint('/api/products/featured', 'featured')">Get Featured Products</button>
+        <div id="products" class="response"></div>
+        <div id="featured" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3>Cart</h3>
+        <button onclick="testEndpoint('/api/cart', 'cart')">Get Cart</button>
+        <button onclick="addToCart()">Add Sample Item to Cart</button>
+        <div id="cart" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h3>Authentication</h3>
+        <button onclick="registerUser()">Register Test User</button>
+        <button onclick="loginUser()">Login Test User</button>
+        <div id="auth" class="response"></div>
+    </div>
+
+    <script>
+        let authToken = null;
+
+        async function testEndpoint(url, elementId) {
+            try {
+                const headers = {'Content-Type': 'application/json'};
+                if (authToken) {
+                    headers['Authorization'] = `Bearer ${authToken}`;
+                }
+
+                const response = await fetch(url, { headers });
+                const data = await response.json();
+                
+                document.getElementById(elementId).innerHTML = 
+                    `<strong>Status:</strong> ${response.status}<br>
+                     <strong>Response:</strong><br>
+                     <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                
+                document.getElementById(elementId).className = 
+                    response.ok ? 'response success' : 'response error';
+            } catch (error) {
+                document.getElementById(elementId).innerHTML = 
+                    `<strong>Error:</strong> ${error.message}`;
+                document.getElementById(elementId).className = 'response error';
+            }
+        }
+
+        async function addToCart() {
+            try {
+                const response = await fetch('/api/cart', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        product_id: 1,
+                        quantity: 1
+                    })
+                });
+                const data = await response.json();
+                
+                document.getElementById('cart').innerHTML = 
+                    `<strong>Add to Cart Status:</strong> ${response.status}<br>
+                     <strong>Response:</strong><br>
+                     <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                
+                // Refresh cart
+                testEndpoint('/api/cart', 'cart');
+            } catch (error) {
+                document.getElementById('cart').innerHTML = 
+                    `<strong>Error:</strong> ${error.message}`;
+            }
+        }
+
+        async function registerUser() {
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        name: 'Test User',
+                        email: 'test@nexshop.com',
+                        password: 'password123',
+                        password_confirmation: 'password123'
+                    })
+                });
+                const data = await response.json();
+                
+                if (data.token) {
+                    authToken = data.token;
+                }
+                
+                document.getElementById('auth').innerHTML = 
+                    `<strong>Register Status:</strong> ${response.status}<br>
+                     <strong>Response:</strong><br>
+                     <pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                document.getElementById('auth').innerHTML = 
+                    `<strong>Error:</strong> ${error.message}`;
+            }
+        }
+
+        async function loginUser() {
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        email: 'test@nexshop.com',
+                        password: 'password123'
+                    })
+                });
+                const data = await response.json();
+                
+                if (data.token) {
+                    authToken = data.token;
+                }
+                
+                document.getElementById('auth').innerHTML = 
+                    `<strong>Login Status:</strong> ${response.status}<br>
+                     <strong>Response:</strong><br>
+                     <pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                document.getElementById('auth').innerHTML = 
+                    `<strong>Error:</strong> ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

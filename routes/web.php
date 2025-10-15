@@ -1,14 +1,8 @@
 <?php
 
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\PlanController;
-use App\Http\Controllers\VerificationController;
-use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\UserSettingsController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SocialiteController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,92 +16,93 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('welcome');
 });
 
-Route::get('/google/login', [SocialiteController::class, 'googleLogin'])->name('google.login');
-Route::get('/auth/google/callback', [SocialiteController::class, 'googleCallback'])->name('google.callback');
+// Default login route (redirects to admin login)
+Route::get('/login', function () {
+    return redirect()->route('admin.login');
+})->name('login');
 
-
-Route::get('/verify', [VerificationController::class, 'verifyUser'])->name('verify.user');
-Route::get('/email/verify', [VerificationController::class, 'emailVerifyUser'])->name('email.verification.notice')->middleware('auth');
-Route::post('/resend/email/verify', [VerificationController::class, 'resendEmailVerifyUser'])->name('verification.resend')->middleware('auth');
-
-// Route::get('/verify','Auth\RegisterController@verifyUser')->name('verify.user');
-
-Route::middleware(['check.session.data'])->group(function () {
-    // Routes that require session data check
-    Route::get('/verification', [VerificationController::class, 'verification'])->name('verification');
-    Route::post('/verification', [VerificationController::class, 'VerifyEmaiLPhoneOtp'])->name('verify.email.phone.otp');
-
-    Route::get('/2fa-verification', [VerificationController::class, 'two_fa_verification'])->name('two.fa.verification');
-    Route::post('/verify-2fa-vemail-otp', [VerificationController::class, 'verify_two_fa_email_otp'])->name('verify.email.otp.two.fa');
-
-    Route::get('/2fa-phone-verification', [VerificationController::class, 'two_fa_phone_verification'])->name('two.fa.phone.verification');
-    Route::post('/verify-2fa-phone-otp', [VerificationController::class, 'verify_two_fa_phone_otp'])->name('verify.phone.otp.two.fa');
-
-
-
-});
-
-
-
-
+// Dashboard redirect to admin dashboard
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'check.email.verify'])->name('dashboard');
-
-Route::middleware(['auth', 'check.email.verify'])->group(function () {
-    Route::post('/phone/verification', [VerificationController::class, 'phone_verification'])->name('phone.verifications');
-    Route::post('/phone/verify', [VerificationController::class, 'check_phone_verification'])->name('check.phone.otp');
-
-    Route::get('plans', [PlanController::class, 'index'])->name('plans');
-    Route::get('plans/{plan}', [PlanController::class, 'show'])->name("plans.show");
-    Route::post('subscription', [PlanController::class, 'subscription'])->name("subscription.create");
-
-    Route::group(['prefix' => '/user'], function () {
-        Route::get('/profile', [UserProfileController::class, 'index'])->name('user.profile');
-        Route::get('/profile/edit/{id}', [UserProfileController::class, 'edit'])->name('user.profile.edit');
-        Route::post('/profile/update/{id}', [UserProfileController::class, 'update'])->name('user.profile.update');
-
-        Route::get('/profile/social/create}', [UserProfileController::class, 'SocialCreate'])->name('user.profile.social.create');
-        Route::post('/profile/social/store}', [UserProfileController::class, 'SocialStore'])->name('user.profile.social.store');
-        Route::get('/profile/social/edit/{id}', [UserProfileController::class, 'SocialEdit'])->name('user.profile.social.edit');
-        Route::post('/profile/social/update/{id}', [UserProfileController::class, 'SocialUpdate'])->name('user.profile.social.update');
-
-        Route::get('/settings', [UserSettingsController::class, 'index'])->name('user.settings');
-        Route::get('/settings/create', [UserSettingsController::class, 'create'])->name('user.settings.create');
-        Route::post('/settings/store', [UserSettingsController::class, 'store'])->name('user.settings.store');
-        Route::get('/settings/edit/{id}', [UserSettingsController::class, 'edit'])->name('user.settings.edit');
-        Route::post('/settings/update/{id}', [UserSettingsController::class, 'update'])->name('user.settings.update');
-        Route::post('/store-radio-value', [UserSettingsController::class, 'twoFaStore'])->name('user.profile.2fa.store');
-        Route::get('/get-radio-value', [UserSettingsController::class, 'get'])->name('get.user.profile.2fa.store');
-
-        Route::get('/', [UserController::class, 'index'])->name('users');
-        Route::get('/create', [UserController::class, 'create'])->name('users.create');
-        Route::post('/store', [UserController::class, 'store'])->name('users.store');
-        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
-        Route::post('/update', [UserController::class, 'update'])->name('users.update');
-        Route::get('/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
-
-
-
-    });
-
-    Route::group(['prefix' => '/blog'], function () {
-        Route::get('/listing',[BlogController::class, 'listing'])->name('blog.listing');
-        Route::get('/create',[BlogController::class, 'create'])->name('blog.create');
-        Route::post('/store',[BlogController::class, 'store'])->name('blog.store');
-        Route::get('/edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
-        Route::post('/update', [BlogController::class, 'update'])->name('blog.update');
-        Route::get('/delete/{id}', [BlogController::class, 'delete'])->name('blog.delete');
-    });
-
-
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    return redirect()->route('admin.dashboard');
 });
 
-require __DIR__.'/auth.php';
+// Admin Routes
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Guest routes
+    Route::middleware('guest:admin')->group(function () {
+        Route::get('/login', [AdminController::class, 'showLogin'])->name('login');
+        Route::post('/login', [AdminController::class, 'login']);
+    });
+    
+    // Authenticated routes
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
+        
+        // Products Management
+        Route::resource('products', AdminProductController::class);
+        Route::patch('/products/{product}/toggle-status', [AdminProductController::class, 'toggleStatus'])->name('products.toggle-status');
+        
+        // Settings Management
+        Route::get('/settings', [\App\Http\Controllers\Admin\AdminSettingsController::class, 'index'])->name('settings.index');
+        Route::post('/settings', [\App\Http\Controllers\Admin\AdminSettingsController::class, 'update'])->name('settings.update');
+        Route::get('/settings/theme', [\App\Http\Controllers\Admin\AdminSettingsController::class, 'theme'])->name('settings.theme');
+        Route::post('/settings/theme', [\App\Http\Controllers\Admin\AdminSettingsController::class, 'updateTheme'])->name('settings.theme.update');
+        
+        // Order Management
+        Route::get('/orders', [\App\Http\Controllers\Admin\AdminOrderController::class, 'index'])->name('orders.index');
+        Route::get('/orders/{order}', [\App\Http\Controllers\Admin\AdminOrderController::class, 'show'])->name('orders.show');
+        Route::patch('/orders/{order}/status', [\App\Http\Controllers\Admin\AdminOrderController::class, 'updateStatus'])->name('orders.update-status');
+        
+        // Category Management
+        Route::resource('categories', \App\Http\Controllers\Admin\AdminCategoryController::class);
+        Route::patch('/categories/{category}/toggle-status', [\App\Http\Controllers\Admin\AdminCategoryController::class, 'toggleStatus'])->name('categories.toggle-status');
+        
+        // Customer Management
+        Route::get('/customers', [\App\Http\Controllers\Admin\AdminCustomerController::class, 'index'])->name('customers.index');
+        Route::get('/customers/{user}', [\App\Http\Controllers\Admin\AdminCustomerController::class, 'show'])->name('customers.show');
+        
+        // Analytics
+        Route::get('/analytics', [\App\Http\Controllers\Admin\AdminAnalyticsController::class, 'index'])->name('analytics.index');
+        Route::get('/analytics/sales-report', [\App\Http\Controllers\Admin\AdminAnalyticsController::class, 'salesReport'])->name('analytics.sales-report');
+        Route::get('/analytics/customers', [\App\Http\Controllers\Admin\AdminAnalyticsController::class, 'customerAnalytics'])->name('analytics.customers');
+        Route::get('/analytics/products', [\App\Http\Controllers\Admin\AdminAnalyticsController::class, 'productAnalytics'])->name('analytics.products');
+        
+        // Contact Messages
+        Route::get('/contacts', [\App\Http\Controllers\Admin\AdminContactController::class, 'index'])->name('contacts.index');
+        Route::get('/contacts/{contact}', [\App\Http\Controllers\Admin\AdminContactController::class, 'show'])->name('contacts.show');
+        Route::patch('/contacts/{contact}/status', [\App\Http\Controllers\Admin\AdminContactController::class, 'updateStatus'])->name('contacts.status');
+        Route::delete('/contacts/{contact}', [\App\Http\Controllers\Admin\AdminContactController::class, 'destroy'])->name('contacts.destroy');
+        
+        // Deal Management
+        Route::resource('deals', \App\Http\Controllers\Admin\AdminDealController::class);
+        
+        // Brand Management
+        Route::resource('brands', \App\Http\Controllers\Admin\AdminBrandController::class);
+        Route::patch('/brands/{brand}/toggle-status', [\App\Http\Controllers\Admin\AdminBrandController::class, 'toggleStatus'])->name('brands.toggle-status');
+        
+        // Coupon Management
+        Route::resource('coupons', \App\Http\Controllers\Admin\AdminCouponController::class);
+        Route::patch('/coupons/{coupon}/toggle-status', [\App\Http\Controllers\Admin\AdminCouponController::class, 'toggleStatus'])->name('coupons.toggle-status');
+        
+        // Review Management
+        Route::get('/reviews', [\App\Http\Controllers\Admin\AdminReviewController::class, 'index'])->name('reviews.index');
+        Route::get('/reviews/{review}', [\App\Http\Controllers\Admin\AdminReviewController::class, 'show'])->name('reviews.show');
+        Route::patch('/reviews/{review}/approve', [\App\Http\Controllers\Admin\AdminReviewController::class, 'approve'])->name('reviews.approve');
+        Route::patch('/reviews/{review}/reject', [\App\Http\Controllers\Admin\AdminReviewController::class, 'reject'])->name('reviews.reject');
+        Route::delete('/reviews/{review}', [\App\Http\Controllers\Admin\AdminReviewController::class, 'destroy'])->name('reviews.destroy');
+        Route::post('/reviews/bulk-action', [\App\Http\Controllers\Admin\AdminReviewController::class, 'bulkAction'])->name('reviews.bulk-action');
+        
+        // Marketing Tools
+        Route::get('/marketing/newsletter', [\App\Http\Controllers\Admin\AdminMarketingController::class, 'newsletter'])->name('marketing.newsletter');
+        Route::get('/marketing/export-subscribers', [\App\Http\Controllers\Admin\AdminMarketingController::class, 'exportSubscribers'])->name('marketing.export-subscribers');
+        Route::patch('/marketing/unsubscribe/{subscriber}', [\App\Http\Controllers\Admin\AdminMarketingController::class, 'unsubscribeNewsletter'])->name('marketing.unsubscribe');
+        Route::get('/marketing/seo', [\App\Http\Controllers\Admin\AdminMarketingController::class, 'seo'])->name('marketing.seo');
+        Route::post('/marketing/seo', [\App\Http\Controllers\Admin\AdminMarketingController::class, 'storeSeo'])->name('marketing.store-seo');
+        Route::get('/marketing/social-media', [\App\Http\Controllers\Admin\AdminMarketingController::class, 'socialMedia'])->name('marketing.social-media');
+        Route::post('/marketing/social-media', [\App\Http\Controllers\Admin\AdminMarketingController::class, 'updateSocialMedia'])->name('marketing.update-social-media');
+    });
+});

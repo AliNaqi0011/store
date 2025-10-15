@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - NexShop</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 20px auto; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { background: #007cba; color: white; padding: 20px; border-radius: 10px 10px 0 0; }
+        .form-container { padding: 30px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #333; }
+        input, select, textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 14px; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #007cba; }
+        textarea { resize: vertical; min-height: 100px; }
+        .form-row { display: flex; gap: 20px; }
+        .form-row .form-group { flex: 1; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; }
+        .checkbox-group input[type="checkbox"] { width: auto; }
+        .image-upload { border: 2px dashed #ddd; padding: 30px; text-align: center; border-radius: 6px; cursor: pointer; transition: all 0.3s; }
+        .image-upload:hover { border-color: #007cba; background: #f8f9fa; }
+        .image-upload.dragover { border-color: #007cba; background: #e3f2fd; }
+        .image-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .image-item { position: relative; width: 100px; height: 100px; border-radius: 6px; overflow: hidden; border: 2px solid #ddd; }
+        .image-item img { width: 100%; height: 100%; object-fit: cover; }
+        .image-item .remove { position: absolute; top: 5px; right: 5px; background: #ff4444; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 12px; }
+        .btn { background: #007cba; color: white; padding: 15px 30px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; transition: all 0.3s; }
+        .btn:hover { background: #005a87; transform: translateY(-2px); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .result { margin-top: 20px; padding: 15px; border-radius: 6px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .loading { display: none; text-align: center; margin-top: 20px; }
+        .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #007cba; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Add New Product</h1>
+            <p>Fill in the details below to add a new product to your store</p>
+        </div>
+        
+        <div class="form-container">
+            <form id="productForm" enctype="multipart/form-data">
+                <!-- Basic Information -->
+                <div class="form-group">
+                    <label for="name">Product Name *</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter product name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="short_description">Short Description</label>
+                    <textarea id="short_description" name="short_description" placeholder="Brief description for product listings"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Full Description *</label>
+                    <textarea id="description" name="description" required placeholder="Detailed product description"></textarea>
+                </div>
+                
+                <!-- Category and Brand -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category_id">Category *</label>
+                        <select id="category_id" name="category_id" required>
+                            <option value="">Select Category</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="brand_id">Brand</label>
+                        <select id="brand_id" name="brand_id">
+                            <option value="">Select Brand</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Pricing and Inventory -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sku">SKU *</label>
+                        <input type="text" id="sku" name="sku" required placeholder="Product SKU">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price *</label>
+                        <input type="number" id="price" name="price" step="0.01" min="0" required placeholder="0.00">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="compare_price">Compare Price</label>
+                        <input type="number" id="compare_price" name="compare_price" step="0.01" min="0" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="stock_quantity">Stock Quantity *</label>
+                        <input type="number" id="stock_quantity" name="stock_quantity" min="0" required placeholder="0">
+                    </div>
+                </div>
+                
+                <!-- Product Images -->
+                <div class="form-group">
+                    <label>Product Images</label>
+                    <div class="image-upload" id="imageUpload">
+                        <p>📷 Click to upload images or drag and drop</p>
+                        <p style="font-size: 12px; color: #666; margin-top: 10px;">Supported: JPG, PNG, GIF (Max: 2MB each)</p>
+                        <input type="file" id="images" name="images[]" multiple accept="image/*" style="display: none;">
+                    </div>
+                    <div class="image-preview" id="imagePreview"></div>
+                </div>
+                
+                <!-- Product Options -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="is_active" name="is_active" checked>
+                            <label for="is_active">Active Product</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="is_featured" name="is_featured">
+                            <label for="is_featured">Featured Product</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn" id="submitBtn">Create Product</button>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Creating product...</p>
+                </div>
+            </form>
+            
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        let selectedFiles = [];
+        
+        // Load categories and brands
+        async function loadData() {
+            try {
+                // Load categories
+                const categoriesResponse = await fetch('/api/products/categories');
+                const categoriesData = await categoriesResponse.json();
+                const categorySelect = document.getElementById('category_id');
+                
+                if (categoriesData.success) {
+                    categoriesData.data.forEach(category => {
+                        const option = document.createElement('option');
+                        option.value = category.id;
+                        option.textContent = category.name;
+                        categorySelect.appendChild(option);
+                    });
+                }
+                
+                // Load brands
+                const brandsResponse = await fetch('/api/products/brands');
+                const brandsData = await brandsResponse.json();
+                const brandSelect = document.getElementById('brand_id');
+                
+                if (brandsData.success) {
+                    brandsData.data.forEach(brand => {
+                        const option = document.createElement('option');
+                        option.value = brand.id;
+                        option.textContent = brand.name;
+                        brandSelect.appendChild(option);
+                    });
+                }
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                showResult('Failed to load categories and brands', 'error');
+            }
+        }
+        
+        // Image upload handling
+        const imageUpload = document.getElementById('imageUpload');
+        const imageInput = document.getElementById('images');
+        const imagePreview = document.getElementById('imagePreview');
+        
+        imageUpload.addEventListener('click', () => imageInput.click());
+        
+        imageUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            imageUpload.classList.add('dragover');
+        });
+        
+        imageUpload.addEventListener('dragleave', () => {
+            imageUpload.classList.remove('dragover');
+        });
+        
+        imageUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            imageUpload.classList.remove('dragover');
+            const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+            handleFiles(files);
+        });
+        
+        imageInput.addEventListener('change', (e) => {
+            handleFiles(Array.from(e.target.files));
+        });
+        
+        function handleFiles(files) {
+            files.forEach(file => {
+                if (file.size > 2 * 1024 * 1024) {
+                    showResult(`File ${file.name} is too large. Maximum size is 2MB.`, 'error');
+                    return;
+                }
+                selectedFiles.push(file);
+            });
+            updateImagePreview();
+        }
+        
+        function updateImagePreview() {
+            imagePreview.innerHTML = '';
+            selectedFiles.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const imageItem = document.createElement('div');
+                    imageItem.className = 'image-item';
+                    imageItem.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <button type="button" class="remove" onclick="removeImage(${index})">×</button>
+                    `;
+                    imagePreview.appendChild(imageItem);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        function removeImage(index) {
+            selectedFiles.splice(index, 1);
+            updateImagePreview();
+        }
+        
+        // Form submission
+        document.getElementById('productForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            const form = e.target;
+            
+            // Add form fields
+            formData.append('name', form.name.value);
+            formData.append('description', form.description.value);
+            formData.append('short_description', form.short_description.value);
+            formData.append('sku', form.sku.value);
+            formData.append('price', form.price.value);
+            formData.append('compare_price', form.compare_price.value || '');
+            formData.append('stock_quantity', form.stock_quantity.value);
+            formData.append('category_id', form.category_id.value);
+            formData.append('brand_id', form.brand_id.value || '');
+            formData.append('is_active', form.is_active.checked ? '1' : '0');
+            formData.append('is_featured', form.is_featured.checked ? '1' : '0');
+            
+            // Add images
+            selectedFiles.forEach(file => {
+                formData.append('images[]', file);
+            });
+            
+            try {
+                showLoading(true);
+                
+                const response = await fetch('/api/products/create', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showResult(`✅ Product "${result.data.name}" created successfully!<br>Product ID: ${result.data.id}`, 'success');
+                    form.reset();
+                    selectedFiles = [];
+                    updateImagePreview();
+                } else {
+                    showResult(`❌ Error: ${result.message || 'Failed to create product'}`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Error: ${error.message}`, 'error');
+            } finally {
+                showLoading(false);
+            }
+        });
+        
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+            document.getElementById('submitBtn').disabled = show;
+        }
+        
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = message;
+            resultDiv.className = `result ${type}`;
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Load data on page load
+        loadData();
+    </script>
+</body>
+</html>
