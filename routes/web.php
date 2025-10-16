@@ -15,19 +15,25 @@ use App\Http\Controllers\Admin\AdminProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// Default login route (redirects to admin login)
+// Default login route (check admin auth first)
 Route::get('/login', function () {
-    return redirect()->route('admin.login');
+    if (auth('admin')->check()) {
+        return redirect()->route('admin.dashboard');
+    }
+    // Serve Vue.js app for frontend login
+    return response(file_get_contents(public_path('index.html')))
+        ->header('Content-Type', 'text/html');
 })->name('login');
 
 // Dashboard redirect to admin dashboard
 Route::get('/dashboard', function () {
     return redirect()->route('admin.dashboard');
 });
+
+// Serve Vue.js frontend (must be last)
+Route::get('/{any}', function () {
+    return file_get_contents(public_path('index.html'));
+})->where('any', '^(?!api|admin|storage|login|dashboard).*$');
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {

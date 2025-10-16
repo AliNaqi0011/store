@@ -38,6 +38,9 @@ RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 WORKDIR /var/www/html/frontend
 RUN npm install && npm run build
 
+# Copy frontend build to Laravel public directory
+RUN cp -r dist/* /var/www/html/public/
+
 # Back to main directory
 WORKDIR /var/www/html
 
