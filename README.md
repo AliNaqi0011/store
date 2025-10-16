@@ -1,69 +1,222 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# NexShop - E-commerce Platform
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A full-stack e-commerce platform built with Laravel (Backend) and Vue.js (Frontend).
 
-## About NexShop
+## 🚀 Features
 
-NexShop is a modern, full-featured e-commerce API built with Laravel. It provides a complete backend solution for online stores with the following features:
+### Frontend (Vue.js)
+- Modern responsive design
+- Product catalog with search and filtering
+- Shopping cart functionality
+- User authentication (Login/Register)
+- Order management
+- Product reviews and ratings
+- Wishlist functionality
+- Contact forms
+- Newsletter subscription
 
-- **Product Management**: Categories, brands, variants, and attributes
-- **User Authentication**: Secure registration and login with Laravel Sanctum
-- **Shopping Cart**: Session-based cart management
-- **Order Processing**: Complete order lifecycle with Stripe integration
-- **Payment Integration**: Laravel Cashier with Stripe support
-- **Search Functionality**: Laravel Scout integration ready
-- **Wishlist System**: User product wishlists
-- **Coupon System**: Flexible discount codes
-- **Review System**: Product ratings and reviews
-- **API Resources**: Clean, consistent JSON responses
+### Backend (Laravel)
+- RESTful API architecture
+- Admin panel for complete store management
+- Product management with variants and images
+- Order processing and tracking
+- User management
+- Category and brand management
+- Coupon and deal management
+- Analytics and reporting
+- Email notifications
+- Payment integration (Stripe)
 
-NexShop is designed to be production-ready with proper validation, error handling, and security measures.
+## 🛠️ Tech Stack
 
-## Learning Laravel
+### Backend
+- **Framework:** Laravel 10
+- **Database:** MySQL
+- **Authentication:** Laravel Sanctum
+- **File Storage:** Local/Cloud storage
+- **Email:** SMTP (Mailtrap for development)
+- **Payment:** Stripe
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Frontend
+- **Framework:** Vue.js 3
+- **State Management:** Pinia
+- **Routing:** Vue Router
+- **HTTP Client:** Axios
+- **Styling:** Tailwind CSS
+- **Build Tool:** Vite
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 📋 Prerequisites
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP >= 8.1
+- Composer
+- Node.js >= 16
+- MySQL
+- Git
 
-## Laravel Sponsors
+## 🔧 Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 1. Clone the repository
+```bash
+git clone https://github.com/AliNaqi0011/store.git
+cd store
+```
 
-### Premium Partners
+### 2. Backend Setup (Laravel)
+```bash
+# Install PHP dependencies
+composer install
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+# Copy environment file
+cp .env.example .env
 
-## Contributing
+# Generate application key
+php artisan key:generate
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Configure database in .env file
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nexshop_db
+DB_USERNAME=root
+DB_PASSWORD=
 
-## Code of Conduct
+# Run migrations
+php artisan migrate
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Seed database with sample data
+php artisan db:seed
 
-## Security Vulnerabilities
+# Create storage link
+php artisan storage:link
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Start Laravel server
+php artisan serve
+```
 
-## License
+### 3. Frontend Setup (Vue.js)
+```bash
+# Navigate to frontend directory
+cd frontend
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+## 🌐 Access URLs
+
+- **Frontend:** http://localhost:3000
+- **Backend API:** http://127.0.0.1:8000/api
+- **Admin Panel:** http://127.0.0.1:8000/admin/login
+
+## 👤 Default Admin Credentials
+
+- **Email:** ali@gmail.com
+- **Password:** password
+
+## 📁 Project Structure
+
+```
+├── app/                    # Laravel application files
+├── database/              # Migrations, seeders, factories
+├── frontend/              # Vue.js frontend application
+│   ├── src/
+│   │   ├── components/    # Reusable Vue components
+│   │   ├── views/         # Page components
+│   │   ├── stores/        # Pinia stores
+│   │   └── router/        # Vue Router configuration
+├── public/                # Public assets
+├── resources/             # Laravel views and assets
+├── routes/                # API and web routes
+└── storage/               # File storage
+```
+
+## 🔗 API Endpoints
+
+### Authentication
+- `POST /api/register` - User registration
+- `POST /api/login` - User login
+- `POST /api/logout` - User logout
+
+### Products
+- `GET /api/products` - Get all products
+- `GET /api/products/{slug}` - Get product details
+- `GET /api/products/featured` - Get featured products
+
+### Categories
+- `GET /api/categories` - Get all categories
+
+### Cart
+- `GET /api/cart` - Get cart items
+- `POST /api/cart` - Add item to cart
+- `PUT /api/cart/{id}` - Update cart item
+- `DELETE /api/cart/{id}` - Remove cart item
+
+### Orders
+- `GET /api/orders` - Get user orders
+- `POST /api/checkout` - Process checkout
+
+## 🚀 Deployment
+
+### Production Environment Variables
+```env
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://yourdomain.com
+
+# Database
+DB_CONNECTION=mysql
+DB_HOST=your-db-host
+DB_DATABASE=your-db-name
+DB_USERNAME=your-db-username
+DB_PASSWORD=your-db-password
+
+# Mail
+MAIL_MAILER=smtp
+MAIL_HOST=your-smtp-host
+MAIL_PORT=587
+MAIL_USERNAME=your-email
+MAIL_PASSWORD=your-password
+
+# Stripe
+STRIPE_KEY=pk_live_...
+STRIPE_SECRET=sk_live_...
+```
+
+### Build for Production
+```bash
+# Backend
+composer install --optimize-autoloader --no-dev
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# Frontend
+cd frontend
+npm run build
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📞 Support
+
+For support, email alinaqiofficial@gmail.com or create an issue on GitHub.
+
+## 🙏 Acknowledgments
+
+- Laravel Framework
+- Vue.js Framework
+- Tailwind CSS
+- All contributors and supporters
